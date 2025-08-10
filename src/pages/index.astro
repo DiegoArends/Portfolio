@@ -199,12 +199,12 @@ const projects = [
       </span>
       Sobre mí
     </h2>
-    <div class="flex items-start gap-6">
+    <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
       <div class="relative shrink-0">
         <div class="pointer-events-none absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-sky-500/20 to-violet-500/20 blur-xl opacity-0 hover:opacity-100 transition-opacity"></div>
-        <img src={face.src} width={face.width} height={face.height} alt="Diego Arends" class="w-40 h-40 md:w-48 md:h-48 rounded-2xl object-cover ring-1 ring-neutral-800 shadow-lg hover:rotate-1 hover:scale-[1.02] transition-transform duration-200" />
+        <img src={face.src} width={face.width} height={face.height} alt="Diego Arends" class="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-2xl object-cover ring-1 ring-neutral-800 shadow-lg hover:rotate-1 hover:scale-[1.02] transition-transform duration-200" />
       </div>
-      <div class="text-neutral-300 max-w-3xl">
+      <div class="text-neutral-300 max-w-3xl text-center md:text-left">
         <p>
           Me llamo Diego Arends, tengo 22 años. Comencé a programar en 2024 y, desde entonces, he estado aprendiendo y creando proyectos.
         </p>
@@ -213,7 +213,7 @@ const projects = [
         </p>
       </div>
     </div>
-    <div class="mt-6 flex flex-wrap items-center gap-3">
+    <div class="mt-6 flex flex-wrap items-center justify-center md:justify-start gap-3">
       {['JavaScript','TypeScript','React','Node.js','HTML','CSS','SQL','Tailwind','Astro'].map((t) => (
         <span class={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm ${badgeClass(t)}`}> 
           {techIcons[t] ? (
