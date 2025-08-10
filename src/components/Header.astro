@@ -1,0 +1,47 @@
+---
+const currentPath = Astro.url.pathname;
+            const links = [
+                { href: "/", label: "Home" },
+                { href: "#experience", label: "Experiencia" },
+                { href: "#projects", label: "Proyectos" },
+                { href: "#about", label: "Sobre mí" },
+            ];
+---
+
+<header class="sticky top-0 z-50 w-full backdrop-blur">
+    <div id="header-inner" class="mx-auto max-w-4xl px-4 flex flex-col items-center gap-4 py-3 data-[scrolled=true]:rounded-full data-[scrolled=true]:border data-[scrolled=true]:border-neutral-800 data-[scrolled=true]:bg-neutral-950/70">
+        <nav class="flex items-center gap-6">
+            {
+                links.map((link) => (
+                    <a
+                        href={link.href}
+                        aria-current={
+                            currentPath === link.href ? "page" : undefined
+                        }
+                        class={`text-sm transition-colors hover:text-sky-300 ${
+                            currentPath === link.href
+                                ? "text-sky-400"
+                                : "text-neutral-300"
+                        }`}
+                    >
+                        {link.label}
+                    </a>
+                ))
+            }
+        </nav>
+    </div>
+</header>
+
+<script>
+  const inner = document.getElementById('header-inner');
+  const update = () => {
+    if (!inner) return;
+    if (window.scrollY > 10) {
+      inner.setAttribute('data-scrolled', 'true');
+    } else {
+      inner.removeAttribute('data-scrolled');
+    }
+  };
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+</script>

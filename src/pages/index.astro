@@ -1,16 +1,228 @@
 ---
+import Layout from "../layouts/Layout.astro";
+import avatar from "../assets/avatar.jpeg";
+import face from "../assets/face.jpeg"
+import cv from "../assets/Diego Arends CV.pdf"
 
+const screenshot = (url: string) => `https://s.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=1200`;
+const getImageSrc = (img: string | { src?: string }) => (typeof img === 'string' ? img : img?.src ?? '');
+// Colored border per technology; neutral text and background + hover highlight
+const badgeClass = (t: string) => {
+  switch (t) {
+    case 'React':
+      return 'text-neutral-200 border-sky-500/60 bg-neutral-900/60 hover:bg-sky-500/10 hover:border-sky-400/80 transition-colors';
+    case 'Node.js':
+      return 'text-neutral-200 border-emerald-500/60 bg-neutral-900/60 hover:bg-emerald-500/10 hover:border-emerald-400/80 transition-colors';
+    case 'JavaScript':
+      return 'text-neutral-200 border-yellow-400/60 bg-neutral-900/60 hover:bg-yellow-400/10 hover:border-yellow-300/80 transition-colors';
+    case 'TypeScript':
+      return 'text-neutral-200 border-blue-500/60 bg-neutral-900/60 hover:bg-blue-500/10 hover:border-blue-400/80 transition-colors';
+    case 'HTML':
+      return 'text-neutral-200 border-orange-500/60 bg-neutral-900/60 hover:bg-orange-500/10 hover:border-orange-400/80 transition-colors';
+    case 'CSS':
+      return 'text-neutral-200 border-blue-400/60 bg-neutral-900/60 hover:bg-blue-400/10 hover:border-blue-300/80 transition-colors';
+    case 'SQLite':
+    case 'SQL':
+      return 'text-neutral-200 border-cyan-500/60 bg-neutral-900/60 hover:bg-cyan-500/10 hover:border-cyan-400/80 transition-colors';
+    case 'Tailwind':
+      return 'text-neutral-200 border-cyan-400/60 bg-neutral-900/60 hover:bg-cyan-400/10 hover:border-cyan-300/80 transition-colors';
+    case 'Astro':
+      return 'text-neutral-200 border-orange-500/60 bg-neutral-900/60 hover:bg-orange-500/10 hover:border-orange-400/80 transition-colors';
+    default:
+      return 'text-neutral-200 border-neutral-700/60 bg-neutral-900/60 hover:bg-neutral-800/60 transition-colors';
+  }
+};
+
+const techIcons: Record<string, string> = {
+  React: 'https://cdn.simpleicons.org/react/61DAFB',
+  'Node.js': 'https://cdn.simpleicons.org/nodedotjs/339933',
+  JavaScript: 'https://cdn.simpleicons.org/javascript/F7DF1E',
+  TypeScript: 'https://cdn.simpleicons.org/typescript/3178C6',
+  HTML: 'https://cdn.simpleicons.org/html5/E34F26',
+  CSS: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><path fill="%231572B6" d="M19 3l9 100 36 10 36-10 9-100H19zm73 26l-1 9H36l-1-9h57zm-2 19l-3 35-28 8-28-8-2-22h13l1 10 15 4 15-4 2-23H34l-2-9h58z"/></svg>',
+  SQLite: 'https://cdn.simpleicons.org/sqlite/003B57',
+  SQL: 'https://cdn.simpleicons.org/sqlite/003B57',
+  Tailwind: 'https://cdn.simpleicons.org/tailwindcss/06B6D4',
+  Astro: 'https://cdn.simpleicons.org/astro/FF5D01',
+};
+
+const projects = [
+  {
+    title: "FC Barcelona",
+    description: "Plantilla del primer equipo del Barcelona para la temporada 25/26, con descripción delos jugadores. Sitio trabajado con React (JavaScript) y Node.js",
+    link: "https://primer-equipo-fc-barcelona-1.onrender.com/",
+    image: screenshot("https://primer-equipo-fc-barcelona-1.onrender.com/"),
+    external: true,
+    stack: ["React", "JavaScript", "Node.js", "CSS", "HTML", "SQLite"],
+    repo: "https://github.com/DiegoArends/Primer-Equipo-FC-Barcelona",
+  },
+  {
+    title: "PokeAPI",
+    description: "Pokedex trabajada con React (JavaScript), HTML y CSS",
+    link: "https://pokeapi-dex.onrender.com/",
+    image: screenshot("https://pokeapi-dex.onrender.com/"),
+    external: true,
+    stack: ["React", "JavaScript", "HTML", "CSS"],
+    repo: "https://github.com/DiegoArends/PokeApi-dex",
+  },
+  {
+    title: "Proyecto 3",
+    description: "Blog estático con SEO y RSS",
+    link: "#",
+  },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Portfolio Diego">
+  <section class="pt-8 md:pt-12 pb-16 text-left">
+    <div class="mb-4 flex items-center gap-3">
+      <img src={avatar.src} width={avatar.width} height={avatar.height} alt="Diego Arends" class="w-16 h-16 rounded-full ring-1 ring-neutral-800" />
+      <div class="flex items-center gap-2">
+        <a
+          href="https://www.linkedin.com/in/diego-arends"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-sky-700/60 text-sky-300 hover:bg-sky-400/10 hover:border-sky-600 transition"
+          aria-label="LinkedIn"
+          title="LinkedIn"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.024-3.037-1.852-3.037-1.853 0-2.136 1.447-2.136 2.943v5.663H9.351V9h3.414v1.561h.049c.476-.9 1.637-1.852 3.367-1.852 3.599 0 4.268 2.369 4.268 5.455v6.288zM5.337 7.433A2.062 2.062 0 1 1 5.337 3.31a2.062 2.062 0 0 1 0 4.123zM6.814 20.452H3.861V9h2.953v11.452z"/>
+          </svg>
+        </a>
+        <a
+          href="https://github.com/DiegoArends"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-neutral-700 text-neutral-200 hover:bg-neutral-900/60 transition"
+          aria-label="GitHub"
+          title="GitHub"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+            <path fill-rule="evenodd" d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.02c-3.34.73-4.04-1.6-4.04-1.6-.55-1.38-1.34-1.75-1.34-1.75-1.1-.76.08-.75.08-.75 1.22.08 1.86 1.26 1.86 1.26 1.08 1.85 2.84 1.31 3.53 1 .1-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.52.12-3.16 0 0 1-.32 3.3 1.22a11.5 11.5 0 0 1 6 0c2.3-1.54 3.3-1.22 3.3-1.22.66 1.64.24 2.86.12 3.16.77.83 1.24 1.9 1.24 3.2 0 4.58-2.82 5.6-5.5 5.9.43.37.8 1.1.8 2.22v3.29c0 .32.22.69.82.58A12 12 0 0 0 12 .5Z" clip-rule="evenodd"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <h1 class="text-4xl md:text-6xl font-bold tracking-tight">
+      Hola, soy Diego
+    </h1>
+    <p class="mt-4 text-neutral-300 max-w-2xl text-lg md:text-xl">
+      <span class="text-sky-400 font-medium">Desarrollador Fullstack</span> de Venezuela. Enfocado en crear experiencias web con tecnologías modernas.
+    </p>
+    <div class="mt-8 flex flex-wrap items-center justify-start gap-4">
+      <a href="mailto:diegoarends17@gmail.com?subject=Contacto desde Portfolio&body=Hola Diego,%0D%0A%0D%0AMe interesa tu trabajo como desarrollador.%0D%0A%0D%0ASaludos," class="inline-flex items-center gap-2 rounded-lg bg-sky-500 px-4 py-2 font-medium text-neutral-950 hover:bg-sky-400 transition" title="Enviar email a diegoarends17@gmail.com">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
+          <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z"/>
+          <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z"/>
+        </svg>
+        Contáctame
+      </a>
+      <a href={cv} download="Diego-Arends-CV.pdf" class="inline-flex items-center gap-2 rounded-lg border border-neutral-700 px-4 py-2 font-medium text-neutral-100 hover:bg-neutral-900/60 transition">
+        Descargar CV
+      </a>
+    </div>
+  </section>
+
+  <section id="experience" class="mt-10 scroll-mt-24">
+    <h2 class="text-2xl font-semibold mb-6 inline-flex items-center gap-2">
+      <span class="inline-flex h-8 w-8 items-center justify-center text-amber-400">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+          <path d="M7 6.75A1.75 1.75 0 0 1 8.75 5h6.5A1.75 1.75 0 0 1 17 6.75V8h2.25A1.75 1.75 0 0 1 21 9.75v8.5A1.75 1.75 0 0 1 19.25 20H4.75A1.75 1.75 0 0 1 3 18.25v-8.5A1.75 1.75 0 0 1 4.75 8H7V6.75Zm1.5 0V8h6V6.75a.25.25 0 0 0-.25-.25h-5.5a.25.25 0 0 0-.25.25Z"/>
+        </svg>
+      </span>
+      Experiencia práctica
+    </h2>
+    <div class="space-y-3">
+      <p class="text-neutral-300">
+        <a class="font-medium text-yellow-400"> Construyendo proyectos desde cero:</a> desde la idea y el diseño de la interfaz hasta el desarrollo con React/JavaScript, Node.js y bases de datos, integrando APIs y realizando el despliegue en producción.
+      </p>
+      <p class="text-neutral-300">
+        Aprendí a programar a través de cursos prácticos en <a href="https://www.codecademy.com/learn" target="_blank" rel="noopener noreferrer" class="text-yellow-400 font-medium hover:text-yellow-300 transition-colors">Codecademy</a> y continúo formándome y mejorando mis habilidades con nuevos proyectos.
+      </p>
+    </div>
+  </section>
+
+  <section id="projects" class="mt-14 scroll-mt-24">
+    <h2 class="text-2xl font-semibold mb-6 inline-flex items-center gap-2">
+      <span class="inline-flex h-8 w-8 items-center justify-center text-sky-400">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+          <path d="M3 7.5A1.5 1.5 0 0 1 4.5 6h15A1.5 1.5 0 0 1 21 7.5V9H3V7.5ZM3 10.5h18V18a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18v-7.5Z"/>
+        </svg>
+      </span>
+      Proyectos
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {projects.slice(0, 2).map((p) => (
+        <div class="group overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/40 hover:border-neutral-700 hover:bg-neutral-900 transition">
+          {p.image && (
+            <a href={p.link} target={p.external ? "_blank" : undefined} rel={p.external ? "noopener noreferrer" : undefined} class="block">
+              <img src={getImageSrc(p.image)} alt={p.title} class="h-40 w-full object-cover opacity-90 group-hover:opacity-100" loading="lazy" />
+            </a>
+          )}
+          <div class="p-5">
+            <h3 class="text-lg font-medium">
+              <a href={p.link} target={p.external ? "_blank" : undefined} rel={p.external ? "noopener noreferrer" : undefined} class="hover:underline">{p.title}</a>
+            </h3>
+          <p class="mt-2 text-sm text-neutral-400">{p.description}</p>
+            {p.stack && (
+              <div class="mt-3 flex flex-wrap items-center gap-2">
+                {p.stack.map((t: string) => (
+                  <span class={`inline-flex items-center justify-center rounded-full border px-3 py-1 text-sm ${badgeClass(t)}`} title={t} aria-label={t}>
+                    {techIcons[t] ? (
+                      <img src={techIcons[t]} alt="" class="h-4 w-4" loading="lazy" />
+                    ) : null}
+                  </span>
+                ))}
+              </div>
+            )}
+            <div class="mt-4 flex items-center gap-3">
+              {p.repo && (
+                <a href={p.repo} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-lg border border-neutral-700 px-3 py-1.5 text-sm text-neutral-100 hover:bg-neutral-900/60 transition" aria-label="Repositorio">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4"><path fill-rule="evenodd" d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.02c-3.34.73-4.04-1.6-4.04-1.6-.55-1.38-1.34-1.75-1.34-1.75-1.1-.76.08-.75.08-.75 1.22.08 1.86 1.26 1.86 1.26 1.08 1.85 2.84 1.31 3.53 1 .1-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.52.12-3.16 0 0 1-.32 3.3 1.22a11.5 11.5 0 0 1 6 0c2.3-1.54 3.3-1.22 3.3-1.22.66 1.64.24 2.86.12 3.16.77.83 1.24 1.9 1.24 3.2 0 4.58-2.82 5.6-5.5 5.9.43.37.8 1.1.8 2.22v3.29c0 .32.22.69.82.58A12 12 0 0 0 12 .5Z" clip-rule="evenodd"/></svg>
+                  Repo
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="about" class="mt-20 scroll-mt-24">
+    <h2 class="text-2xl font-semibold mb-4 inline-flex items-center gap-2">
+      <span class="inline-flex h-8 w-8 items-center justify-center text-violet-400">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+          <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm-7.5 7.25a7.5 7.5 0 0 1 15 0V21H4.5Z"/>
+        </svg>
+      </span>
+      Sobre mí
+    </h2>
+    <div class="flex items-start gap-6">
+      <div class="relative shrink-0">
+        <div class="pointer-events-none absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-sky-500/20 to-violet-500/20 blur-xl opacity-0 hover:opacity-100 transition-opacity"></div>
+        <img src={face.src} width={face.width} height={face.height} alt="Diego Arends" class="w-40 h-40 md:w-48 md:h-48 rounded-2xl object-cover ring-1 ring-neutral-800 shadow-lg hover:rotate-1 hover:scale-[1.02] transition-transform duration-200" />
+      </div>
+      <div class="text-neutral-300 max-w-3xl">
+        <p>
+          Me llamo Diego Arends, tengo 22 años. Comencé a programar en 2024 y, desde entonces, he estado aprendiendo y creando proyectos.
+        </p>
+        <p class="mt-4">
+          Siempre he tenido interés por la tecnología y quedé encantado con la idea de crear mis propias aplicaciones web. Obtuve mis primeros conocimientos a través de  <span class="text-yellow-400 font-medium">Codecademy.</span>
+        </p>
+      </div>
+    </div>
+    <div class="mt-6 flex flex-wrap items-center gap-3">
+      {['JavaScript','TypeScript','React','Node.js','HTML','CSS','SQL','Tailwind','Astro'].map((t) => (
+        <span class={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm ${badgeClass(t)}`}> 
+          {techIcons[t] ? (
+            <img src={techIcons[t]} alt={t} class="h-4 w-4" loading="lazy" />
+          ) : null}
+          {t}
+        </span>
+      ))}
+    </div>
+  </section>
+
+</Layout>
