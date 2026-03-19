@@ -1,4 +1,8 @@
 ---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 const currentYear = new Date().getFullYear();
 ---
 
@@ -8,7 +12,7 @@ const currentYear = new Date().getFullYear();
       
              <!-- Sección de Contacto -->
        <div class="space-y-3 mb-6">
-         <h3 class="text-lg font-semibold text-neutral-100">Contacto</h3>
+         <h3 class="text-lg font-semibold text-neutral-100">{t('footer.contact')}</h3>
                    <div class="flex justify-center space-x-4">
             <a
               href="https://www.linkedin.com/in/diego-arends"
@@ -35,7 +39,7 @@ const currentYear = new Date().getFullYear();
               </svg>
             </a>
             <a
-              href="mailto:diegoarends17@gmail.com?subject=Contacto desde Portfolio&body=Hola Diego,%0D%0A%0D%0AMe interesa tu trabajo como desarrollador.%0D%0A%0D%0ASaludos,"
+              href={`mailto:diegoarends17@gmail.com?subject=${t('footer.email_subject')}&body=${t('footer.email_body')}`}
               class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-neutral-700 text-neutral-200 hover:bg-neutral-900/60 transition"
               aria-label="Email"
               title="Email"
@@ -53,10 +57,10 @@ const currentYear = new Date().getFullYear();
     <div class="mt-8 pt-6 border-t border-neutral-800">
       <div class="flex flex-col md:flex-row justify-between items-center gap-4">
         <p class="text-sm text-neutral-500">
-          © {currentYear} Diego Arends. Todos los derechos reservados.
+          © {currentYear} Diego Arends. {t('footer.rights')}
         </p>
         <p class="text-sm text-neutral-500">
-          Construido con <span class="text-sky-400">Astro</span> y <span class="text-sky-400">Tailwind CSS</span>
+          <Fragment set:html={t('footer.built')} />
         </p>
       </div>
     </div>
