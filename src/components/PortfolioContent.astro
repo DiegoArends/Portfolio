@@ -61,55 +61,138 @@ const badgeClass = (t: string) => {
 
   <div class="flex flex-wrap justify-center gap-10">
     {
-      projects.map((p) => (
-        <div class="group relative bg-neutral-900/40 backdrop-blur-sm border border-neutral-800/50 rounded-3xl overflow-hidden hover:border-emerald-600/40 hover:shadow-2xl hover:shadow-emerald-600/20 transition-all duration-500 flex flex-col w-full md:w-[calc(50%-1.25rem)]">
-          <div class="aspect-video overflow-hidden relative">
-            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 flex items-end p-6">
-              {p.repo && (
-                <a
-                  href={p.repo}
-                  target="_blank"
-                  class="text-white text-[10px] uppercase tracking-tight font-bold bg-neutral-900/90 px-4 py-2 rounded-xl border border-neutral-700 hover:bg-white hover:text-black transition-all"
-                >
-                  {t("projects.view_code")}
-                </a>
-              )}
-            </div>
-            <img
-              src={getImageSrc(p.image)}
-              alt={p.title}
-              class="w-full h-full object-cover saturate-[0.8] group-hover:saturate-100 group-hover:scale-105 transition-all duration-700"
-            />
-          </div>
-          <div class="p-8 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-3 group-hover:text-emerald-500 transition-colors uppercase tracking-tight">
-              {p.title}
-            </h3>
-            <p class="text-neutral-400 text-sm mb-8 line-clamp-3 leading-relaxed flex-1 italic">
-              {p.description}
-            </p>
+      projects.map((p, cardIdx) =>
+        'subProjects' in p && p.subProjects ? (
+          /* ── Grouped slider card ── */
+          <div
+            class="gn-slider-card group relative bg-neutral-900/40 backdrop-blur-sm border border-neutral-800/50 rounded-3xl overflow-hidden hover:border-emerald-600/40 hover:shadow-2xl hover:shadow-emerald-600/20 transition-all duration-500 flex flex-col w-full md:w-[calc(50%-1.25rem)]"
+            data-slider-id={`slider-${cardIdx}`}
+            data-subprojects={JSON.stringify(p.subProjects)}
+          >
+            {/* Image slider strip */}
+            <div class="aspect-video overflow-hidden relative">
+              <div class="gn-slider-strip flex transition-transform duration-500 h-full" style="width:200%">
+                {p.subProjects.map((sp, i) => (
+                  <div class="relative flex-shrink-0 h-full" style="width:50%">
+                    <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 flex items-end p-6">
+                    </div>
+                    <img
+                      src={sp.image}
+                      alt={sp.title}
+                      class="w-full h-full object-cover saturate-[0.8] group-hover:saturate-100 group-hover:scale-105 transition-all duration-700"
+                    />
+                    {/* Sub-project label pill */}
+                    <span class="absolute top-4 left-4 z-20 text-[10px] uppercase tracking-widest font-bold bg-neutral-950/80 text-emerald-400 border border-emerald-600/30 px-3 py-1 rounded-full backdrop-blur-sm">
+                      {sp.title}
+                    </span>
+                  </div>
+                ))}
+              </div>
 
-            <div class="flex flex-wrap gap-2 mb-8">
-              {p.stack.map((t) => (
-                <span class={badgeClass(t)}>{t}</span>
-              ))}
-            </div>
-
-            <div class="flex items-center justify-between mt-auto pt-6 border-t border-neutral-800/50">
-              <a
-                href={p.link}
-                target="_blank"
-                class="inline-flex items-center gap-2 text-emerald-500 text-sm font-bold hover:text-white transition-all group/link"
+              {/* Arrow nav overlay */}
+              <button
+                class="gn-prev absolute left-3 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-full bg-neutral-950/70 border border-neutral-700 text-white flex items-center justify-center hover:bg-emerald-600 hover:border-emerald-500 transition-all duration-200 opacity-0 group-hover:opacity-100"
+                aria-label="Previous"
               >
-                {t("projects.explore")}
-                <span class="group-hover/link:translate-x-1 transition-transform">
-                  →
-                </span>
-              </a>
+                ←
+              </button>
+              <button
+                class="gn-next absolute right-3 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-full bg-neutral-950/70 border border-neutral-700 text-white flex items-center justify-center hover:bg-emerald-600 hover:border-emerald-500 transition-all duration-200 opacity-0 group-hover:opacity-100"
+                aria-label="Next"
+              >
+                →
+              </button>
+
+              {/* Dot indicators */}
+              <div class="absolute bottom-3 left-1/2 -translate-x-1/2 z-30 flex gap-1.5">
+                {p.subProjects.map((_, i) => (
+                  <span
+                    class={`gn-dot w-1.5 h-1.5 rounded-full transition-all duration-300 ${i === 0 ? 'bg-emerald-500 w-4' : 'bg-neutral-600'}`}
+                    data-dot={i}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Info panel — updates via JS */}
+            <div class="p-8 flex-1 flex flex-col">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-[10px] uppercase tracking-widest text-emerald-500 font-mono">GastonNetworks</span>
+              </div>
+              <h3 class="gn-title text-xl font-bold text-white mb-3 group-hover:text-emerald-500 transition-colors uppercase tracking-tight">
+                {p.subProjects[0].title}
+              </h3>
+              <p class="gn-desc text-neutral-400 text-sm mb-8 line-clamp-3 leading-relaxed flex-1 italic">
+                {p.subProjects[0].description}
+              </p>
+
+              <div class="gn-badges flex flex-wrap gap-2 mb-8">
+                {p.subProjects[0].stack.map((tech) => (
+                  <span class={badgeClass(tech)}>{tech}</span>
+                ))}
+              </div>
+
+              <div class="flex items-center justify-between mt-auto pt-6 border-t border-neutral-800/50">
+                <a
+                  href={p.subProjects[0].link}
+                  target="_blank"
+                  class="gn-link inline-flex items-center gap-2 text-emerald-500 text-sm font-bold hover:text-white transition-all group/link"
+                >
+                  {t("projects.explore")}
+                  <span class="group-hover/link:translate-x-1 transition-transform">→</span>
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-      ))
+        ) : (
+          /* ── Regular card ── */
+          <div class="group relative bg-neutral-900/40 backdrop-blur-sm border border-neutral-800/50 rounded-3xl overflow-hidden hover:border-emerald-600/40 hover:shadow-2xl hover:shadow-emerald-600/20 transition-all duration-500 flex flex-col w-full md:w-[calc(50%-1.25rem)]">
+            <div class="aspect-video overflow-hidden relative">
+              <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 flex items-end p-6">
+                {p.repo && (
+                  <a
+                    href={p.repo}
+                    target="_blank"
+                    class="text-white text-[10px] uppercase tracking-tight font-bold bg-neutral-900/90 px-4 py-2 rounded-xl border border-neutral-700 hover:bg-white hover:text-black transition-all"
+                  >
+                    {t("projects.view_code")}
+                  </a>
+                )}
+              </div>
+              <img
+                src={getImageSrc(p.image)}
+                alt={p.title}
+                class="w-full h-full object-cover saturate-[0.8] group-hover:saturate-100 group-hover:scale-105 transition-all duration-700"
+              />
+            </div>
+            <div class="p-8 flex-1 flex flex-col">
+              <h3 class="text-xl font-bold text-white mb-3 group-hover:text-emerald-500 transition-colors uppercase tracking-tight">
+                {p.title}
+              </h3>
+              <p class="text-neutral-400 text-sm mb-8 line-clamp-3 leading-relaxed flex-1 italic">
+                {p.description}
+              </p>
+
+              <div class="flex flex-wrap gap-2 mb-8">
+                {p.stack.map((t) => (
+                  <span class={badgeClass(t)}>{t}</span>
+                ))}
+              </div>
+
+              <div class="flex items-center justify-between mt-auto pt-6 border-t border-neutral-800/50">
+                <a
+                  href={p.link}
+                  target="_blank"
+                  class="inline-flex items-center gap-2 text-emerald-500 text-sm font-bold hover:text-white transition-all group/link"
+                >
+                  {t("projects.explore")}
+                  <span class="group-hover/link:translate-x-1 transition-transform">→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        )
+      )
     }
   </div>
 </section>
@@ -154,7 +237,7 @@ const badgeClass = (t: string) => {
           )}
           {exp.company === "Freelance" && (
             <div class="flex flex-wrap gap-2">
-              {["Drakon Insights", "Squad Manager", "GastonNetworks"].map(
+              {["Drakon Insights", "Squad Manager", "GastonNetworks", "GN Burgers"].map(
                 (p) => (
                   <span class="text-[9px] uppercase tracking-tighter text-neutral-500 border border-neutral-800 px-2 py-0.5 rounded-md bg-neutral-900/50">
                     {p}
@@ -233,6 +316,7 @@ const badgeClass = (t: string) => {
 </style>
 
 <script>
+  // Face photo interactive effect
   const faceWrapper = document.getElementById('face-photo-wrapper');
   if (faceWrapper) {
     const setActive = () => faceWrapper.classList.add('active');
@@ -242,4 +326,85 @@ const badgeClass = (t: string) => {
     faceWrapper.addEventListener('touchend', removeActive, { passive: true });
     faceWrapper.addEventListener('touchcancel', removeActive, { passive: true });
   }
+
+  // Slider Logic for Grouped Projects
+  document.querySelectorAll('.gn-slider-card').forEach(card => {
+    const strip = card.querySelector('.gn-slider-strip');
+    const prevBtn = card.querySelector('.gn-prev');
+    const nextBtn = card.querySelector('.gn-next');
+    const dots = card.querySelectorAll('.gn-dot');
+    const titleEl = card.querySelector('.gn-title');
+    const descEl = card.querySelector('.gn-desc');
+    const linkEl = card.querySelector('.gn-link');
+    const badgesContainer = card.querySelector('.gn-badges');
+    
+    // Parse the subprojects data attached to the card
+    const rawData = card.getAttribute('data-subprojects');
+    if (!rawData) return;
+    
+    let subProjects = [];
+    try {
+      subProjects = JSON.parse(rawData);
+    } catch (e) {
+      console.error("Error parsing subprojects", e);
+      return;
+    }
+
+    let currentIndex = 0;
+
+    const badgeClass = "text-[11px] uppercase tracking-wider font-bold border border-neutral-800 bg-neutral-900/80 text-neutral-400 px-3 py-1.5 rounded-lg hover:border-emerald-600/30 hover:text-white transition-all duration-300 shadow-sm";
+
+    const updateSlider = (newIndex) => {
+      currentIndex = newIndex;
+      
+      // Update strip position
+      strip.style.transform = `translateX(-${currentIndex * 50}%)`;
+      
+      // Update dots
+      dots.forEach((dot, i) => {
+        if (i === currentIndex) {
+          dot.classList.remove('bg-neutral-600');
+          dot.classList.add('bg-emerald-500', 'w-4');
+        } else {
+          dot.classList.remove('bg-emerald-500', 'w-4');
+          dot.classList.add('bg-neutral-600');
+        }
+      });
+      
+      // Update info panel
+      const sp = subProjects[currentIndex];
+      titleEl.textContent = sp.title;
+      descEl.textContent = sp.description;
+      linkEl.href = sp.link;
+      
+      // Update badges
+      badgesContainer.innerHTML = '';
+      sp.stack.forEach(tech => {
+        const span = document.createElement('span');
+        span.className = badgeClass;
+        span.textContent = tech;
+        badgesContainer.appendChild(span);
+      });
+    };
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const newIndex = currentIndex === 0 ? subProjects.length - 1 : currentIndex - 1;
+        updateSlider(newIndex);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const newIndex = currentIndex === subProjects.length - 1 ? 0 : currentIndex + 1;
+        updateSlider(newIndex);
+      });
+    }
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => updateSlider(i));
+    });
+  });
 </script>

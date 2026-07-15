@@ -72,11 +72,27 @@ export const projects = {
       repo: "https://github.com/DiegoArends/Primer-Equipo-FC-Barcelona",
     },
     {
-      title: "GastonNetworks Portal",
-      description: "Proyecto real para creador de contenido. Desarrollo enfocado en Web Performance y SEO, con una interfaz optimizada para dispositivos móviles y alta tasa de conversión.",
+      title: "GastonNetworks",
+      description: "Suite de proyectos para el creador de contenido GastonNetworks. Desarrollo enfocado en Web Performance y SEO con alta tasa de conversión.",
       link: "https://gastonnetworks.com/",
       image: "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fgastonnetworks.com%2F?w=1200",
       stack: ["REACT.JS", "NODE.JS", "CSS"],
+      subProjects: [
+        {
+          title: "GastonNetworks Portal",
+          description: "Proyecto real para creador de contenido. Desarrollo enfocado en Web Performance y SEO, con una interfaz optimizada para dispositivos móviles y alta tasa de conversión.",
+          link: "https://gastonnetworks.com/",
+          image: "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fgastonnetworks.com%2F?w=1200",
+          stack: ["REACT.JS", "NODE.JS", "CSS"],
+        },
+        {
+          title: "GN Burgers",
+          description: "Aplicación web de menú digital para GastonNetworks.com. Interfaz moderna y responsiva para la visualización de productos, con foco en experiencia de usuario móvil y rendimiento web.",
+          link: "https://gn-burgers.onrender.com/",
+          image: "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fgn-burgers.onrender.com%2F?w=1200",
+          stack: ["REACT.JS", "NODE.JS", "CSS"],
+        },
+      ],
     },
   ],
   en: [
@@ -96,11 +112,27 @@ export const projects = {
       repo: "https://github.com/DiegoArends/Primer-Equipo-FC-Barcelona",
     },
     {
-      title: "GastonNetworks Portal",
-      description: "Real-world project for a content creator. Development focused on Web Performance and SEO, with an interface optimized for mobile devices and a high conversion rate.",
+      title: "GastonNetworks",
+      description: "Suite of projects for content creator GastonNetworks. Development focused on Web Performance and SEO with a high conversion rate.",
       link: "https://gastonnetworks.com/",
       image: "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fgastonnetworks.com%2F?w=1200",
       stack: ["REACT.JS", "NODE.JS", "CSS"],
+      subProjects: [
+        {
+          title: "GastonNetworks Portal",
+          description: "Real-world project for a content creator. Development focused on Web Performance and SEO, with an interface optimized for mobile devices and a high conversion rate.",
+          link: "https://gastonnetworks.com/",
+          image: "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fgastonnetworks.com%2F?w=1200",
+          stack: ["REACT.JS", "NODE.JS", "CSS"],
+        },
+        {
+          title: "GN Burgers",
+          description: "Digital menu web app for GastonNetworks.com. Modern and responsive interface for product display, focused on mobile user experience and web performance.",
+          link: "https://gn-burgers.onrender.com/",
+          image: "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fgn-burgers.onrender.com%2F?w=1200",
+          stack: ["REACT.JS", "NODE.JS", "CSS"],
+        },
+      ],
     },
   ]
 };
